@@ -9,4 +9,5 @@ Bookly App Planning
 
 Project Planning in VS 
 
-![Screenshot 2024-10-29 203505](https://github.com/user-attachments/assets/2df6f4b4-8a65-4863-801c-6914d3373189)
+
+![Screenshot 2024-10-29 211533](https://github.com/user-attachments/assets/f5e76fda-f645-4233-a813-5b35fd7862f5)
