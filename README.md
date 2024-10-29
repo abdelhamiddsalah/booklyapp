@@ -3,14 +3,11 @@
 A new Flutter project.
 
 ## Getting Started
+Bookly App Planning 😁
 
-This project is a starting point for a Flutter application.
+![Screenshot 2024-10-29 203505](https://github.com/user-attachments/assets/bd2617de-618f-4b48-98d2-ee14b043d107)
 
-A few resources to get you started if this is your first Flutter project:
+Project Planning in VS 😁
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot 2024-10-29 211533](https://github.com/user-attachments/assets/f5e76fda-f645-4233-a813-5b35fd7862f5)
