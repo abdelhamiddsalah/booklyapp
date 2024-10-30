@@ -11,3 +11,8 @@ Project Planning in VS 😁
 
 
 ![Screenshot 2024-10-29 211533](https://github.com/user-attachments/assets/f5e76fda-f645-4233-a813-5b35fd7862f5)
+
+Splash Screen
+
+![image](https://github.com/user-attachments/assets/6baa8b35-8244-411f-9488-36e527083767)
+
