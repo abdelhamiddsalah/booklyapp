@@ -1,7 +1,13 @@
+import 'package:booklyapp/core/helper/sharedPrefernces_helper.dart';
+import 'package:booklyapp/features/home/logic/cubit/theme_data_cubit.dart';
+import 'package:booklyapp/features/home/ui/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefHelper.init();
   runApp(const MyApp());
 }
 
@@ -11,35 +17,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(1080, 1920),
-      minTextAdapt: true, 
+      designSize: const Size(375, 820),
+      minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          title: 'Flutter Demo',
-          home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        return BlocProvider(
+          create: (context) => ThemeDataCubit(),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            home: const HomeView(),
+          ),
         );
       },
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title, style: TextStyle(fontSize: 24.sp)), // استخدام ScreenUtil
-      ),
-      body: Center(
-        child: Text(
-          'Hello, Flutter!',
-          style: TextStyle(fontSize: 32.sp), // استخدام ScreenUtil لتكبير الخط
-        ),
-      ),
     );
   }
 }
