@@ -42,10 +42,13 @@ dependencies:
   json_serializable: ^6.8.0
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
-  get_it: ^8.0.1
+  get_it: ^8.0.2
   flutter_native_splash: ^2.4.2
   json_annotation: ^4.9.0
   shared_preferences: ^2.3.2
+  pretty_dio_logger: ^1.4.0
+  shimmer: ^3.0.0
+  fancy_shimmer_image: ^2.0.3
   
   
 

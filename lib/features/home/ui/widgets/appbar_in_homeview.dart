@@ -3,6 +3,7 @@ import 'package:booklyapp/core/themes/app_themes.dart';
 import 'package:booklyapp/features/home/logic/cubit/theme_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppBarInHomeView extends StatelessWidget {
   const AppBarInHomeView({super.key});
@@ -12,17 +13,14 @@ class AppBarInHomeView extends StatelessWidget {
     return BlocBuilder<ThemeDataCubit, ThemeDataState>(
       builder: (context, state) {
         final isDarkMode = state is ThemeDataDark;
-        final iconColor = isDarkMode
-            ? AppThemes.lightTheme.iconTheme.color
-            : AppThemes.darkTheme.iconTheme.color;
-
+        final iconColor = isDarkMode ? AppThemes.lightTheme.iconTheme.color : AppThemes.darkTheme.iconTheme.color;
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               isDarkMode ? 'Bookly' : 'Bookly',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
                 color: iconColor,
               ),
@@ -31,8 +29,7 @@ class AppBarInHomeView extends StatelessWidget {
               children: [
                 IconButton(
                   icon: Icon(
-                    Icons.dark_mode,
-                    color: iconColor,
+                    Icons.dark_mode, color: iconColor,
                   ),
                   onPressed: () {
                     context.read<ThemeDataCubit>().toggleTheme(
@@ -41,8 +38,7 @@ class AppBarInHomeView extends StatelessWidget {
                   },
                 ),
                 Icon(
-                  Icons.search,
-                  color: iconColor,
+                  Icons.search, color: iconColor,
                 ),
               ],
             ),

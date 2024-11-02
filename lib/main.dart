@@ -1,12 +1,15 @@
+import 'package:booklyapp/core/di/depency_injection.dart';
 import 'package:booklyapp/core/helper/sharedPrefernces_helper.dart';
+import 'package:booklyapp/core/routing/app_routing.dart';
+import 'package:booklyapp/core/routing/routes.dart';
 import 'package:booklyapp/features/home/logic/cubit/theme_data_cubit.dart';
-import 'package:booklyapp/features/home/ui/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async{
    WidgetsFlutterBinding.ensureInitialized();
+   setupGetIt();
   await SharedPrefHelper.init();
   runApp(const MyApp());
 }
@@ -26,7 +29,8 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
-            home: const HomeView(),
+            initialRoute: Routes.homeScreen,
+      onGenerateRoute: AppRouting().generateRoute,
           ),
         );
       },
