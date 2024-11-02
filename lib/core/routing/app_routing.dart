@@ -15,7 +15,7 @@ class AppRouting {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => HomeRepoCubit(getIt<HomeRepo>())..fetchDataBooks(),
-            child: const HomeView(),
+            child:  HomeView(),
           ),
         );
       default:

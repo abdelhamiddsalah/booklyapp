@@ -2,14 +2,15 @@ import 'package:booklyapp/core/di/depency_injection.dart';
 import 'package:booklyapp/core/helper/sharedPrefernces_helper.dart';
 import 'package:booklyapp/core/routing/app_routing.dart';
 import 'package:booklyapp/core/routing/routes.dart';
+import 'package:booklyapp/core/themes/app_themes.dart';
 import 'package:booklyapp/features/home/logic/cubit/theme_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
-   setupGetIt();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupGetIt();
   await SharedPrefHelper.init();
   runApp(const MyApp());
 }
@@ -26,11 +27,17 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return BlocProvider(
           create: (context) => ThemeDataCubit(),
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            initialRoute: Routes.homeScreen,
-      onGenerateRoute: AppRouting().generateRoute,
+          child: BlocBuilder<ThemeDataCubit, ThemeDataState>(
+            builder: (context, state) {
+              final isDarkMode = state is ThemeDataDark;
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Flutter Demo',
+                theme: isDarkMode ? AppThemes.lightTheme : AppThemes.darkTheme,
+                initialRoute: Routes.homeScreen,
+                onGenerateRoute: AppRouting().generateRoute,
+              );
+            },
           ),
         );
       },

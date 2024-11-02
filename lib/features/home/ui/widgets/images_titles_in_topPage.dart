@@ -12,13 +12,13 @@ class ImagesTitlesInToppage extends StatelessWidget {
     return BlocBuilder<HomeRepoCubit, HomeRepoState>(
       builder: (context, state) {
         if (state is HomeRepoLoading) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
         if (state is HomeRepoSuccess) {
           return SizedBox(
             height: 210.h,
             child: ListView.builder(
-              itemCount: state.data.items?.length ?? 0, // استخدام عدد العناصر
+              itemCount: state.data.items?.length ?? 0,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 final imageUrl = state.data.items![index].volumeInfo?.imageLinks?.thumbnail;
@@ -29,9 +29,9 @@ class ImagesTitlesInToppage extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 2.6 / 3.7,
                       child: FancyShimmerImage(
-                        imageUrl: imageUrl ?? '', // تمرير عنوان الصورة مباشرة
+                        imageUrl: imageUrl ?? '',
                         boxFit: BoxFit.fill, // ضبط صورة الوعاء
-                        errorWidget: Icon(Icons.error), // عرض أيقونة خطأ إذا فشلت الصورة في التحميل
+                        errorWidget:const Icon(Icons.error), // عرض أيقونة خطأ إذا فشلت الصورة في التحميل
                       ),
                     ),
                   ),
@@ -43,7 +43,7 @@ class ImagesTitlesInToppage extends StatelessWidget {
         if (state is HomeRepoFailure) {
           return Center(child: Text('Error: ${state.errorHandler.error}'));
         }
-        return Center(child: Text('No Data Available')); // حالة افتراضية
+        return const Center(child: Text('No Data Available')); // حالة افتراضية
       },
     );
   }
