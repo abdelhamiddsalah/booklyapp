@@ -9,4 +9,28 @@ class Styles {
       color: color,
     );
   }
+
+  static TextStyle titleInDetails({required BuildContext context}) {
+    return TextStyle(
+      color: Theme.of(context).textTheme.bodyLarge!.color,
+      fontWeight: FontWeight.bold,
+      fontSize: 23.sp, // Using ScreenUtil here for consistency
+    );
+  }
+
+  static TextStyle descriptionIndetailsTitle({required BuildContext context}) {
+    return TextStyle(
+      color: Theme.of(context).textTheme.bodyLarge!.color,
+      fontWeight: FontWeight.w400,
+      fontSize: 16,
+    );
+  }
+
+  static TextStyle descriptionIndetails({required BuildContext context}) {
+    return TextStyle(
+      color: Theme.of(context).textTheme.bodyLarge!.color,
+      fontWeight: FontWeight.w400,
+      fontSize: 17,
+    );
+  }
 }

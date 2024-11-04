@@ -1,5 +1,6 @@
 import 'package:booklyapp/core/helper/enums.dart';
 import 'package:booklyapp/core/themes/styles.dart';
+import 'package:booklyapp/features/cart/ui/widgets/cart_view.dart';
 import 'package:booklyapp/features/home/logic/cubit/theme_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +10,8 @@ class AppBarInHomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Fetch the current theme state from ThemeDataCubit
     final isDarkMode = context.watch<ThemeDataCubit>().state is ThemeDataDark;
-    final iconColor = Theme.of(context).textTheme.bodyLarge?.color ;
-  
+    final iconColor = Theme.of(context).textTheme.bodyLarge?.color;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,13 +24,21 @@ class AppBarInHomeView extends StatelessWidget {
           children: [
             IconButton(
               icon: Icon(Icons.dark_mode, color: iconColor),
+              tooltip: 'Toggle Theme',
               onPressed: () {
-                context.read<ThemeDataCubit>().toggleTheme(
-                      isDarkMode ? ThemeStates.light : ThemeStates.dark,
-                    );
+                final newTheme = isDarkMode ? ThemeStates.light : ThemeStates.dark;
+                context.read<ThemeDataCubit>().toggleTheme(newTheme);
               },
             ),
-            Icon(Icons.search, color: iconColor),
+            IconButton(
+              icon: Icon(Icons.search, color: iconColor),
+              tooltip: 'Cart',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) =>  CartPage()),
+                );
+              },
+            ),
           ],
         ),
       ],

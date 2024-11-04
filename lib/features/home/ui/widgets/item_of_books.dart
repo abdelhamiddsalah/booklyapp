@@ -1,3 +1,6 @@
+import 'package:booklyapp/core/helper/contexts.dart';
+import 'package:booklyapp/core/routing/routes.dart';
+import 'package:booklyapp/features/home/data/models/books_model.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
@@ -5,8 +8,21 @@ class ItemOfBooks extends StatelessWidget {
   final String title;
   final String author;
   final String thumbnailUrl;
+  final String desc;
+  final int index;
+  final String id; // ID of the book
+  // Adding books as an argument
+ final booksmodel books;
+  const ItemOfBooks({
+    Key? key,
+    required this.title,
+    required this.author,
+    required this.thumbnailUrl,
+    required this.id,
+    required this.index,
+    required this.books, required this.desc, // Initialize books
+  }) : super(key: key);
 
-  const ItemOfBooks({super.key,required this.title,required this.author,required this.thumbnailUrl});
   @override
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
@@ -15,14 +31,27 @@ class ItemOfBooks extends StatelessWidget {
         SizedBox(
           width: 100,
           height: 140,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: AspectRatio(
-              aspectRatio: 2.6 / 3.7,
-              child: FancyShimmerImage(
-                imageUrl: thumbnailUrl,
-                boxFit: BoxFit.fill,
-                errorWidget: const Icon(Icons.error),
+          child: InkWell(
+            onTap: () {
+              // Pass `id`, `index`, and `books` to the details view
+              context.pushNamed(
+                Routes.detailsScreen,
+                arguments: {
+                  'id': id,
+                  'index': index,
+                  'books': books, // Pass the actual booksmodel instance
+                },
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: AspectRatio(
+                aspectRatio: 2.6 / 3.7,
+                child: FancyShimmerImage(
+                  imageUrl: thumbnailUrl,
+                  boxFit: BoxFit.fill,
+                  errorWidget: const Icon(Icons.error),
+                ),
               ),
             ),
           ),
@@ -38,20 +67,24 @@ class ItemOfBooks extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
+              SizedBox(height: 5,),
+              Text(desc,maxLines: 2,style: TextStyle(color: textColor,fontSize: 14),),
+              SizedBox(height: 6,),
               Text(
                 author,
-                style: TextStyle(color: textColor, fontSize: 14),
+                style: TextStyle(color: textColor, fontSize: 14,fontWeight: FontWeight.bold),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                
                 children: [
                   Text('12.2', style: TextStyle(color: textColor)),
                   const SizedBox(width: 5),
                   Row(
                     children: [
                       const Icon(Icons.star, color: Colors.yellow),
+                      SizedBox(width: 5,),
                       Text('34', style: TextStyle(color: textColor)),
                     ],
                   ),

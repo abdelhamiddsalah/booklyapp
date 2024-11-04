@@ -22,10 +22,6 @@ class HomeView extends StatelessWidget {
             ? AppThemes.darkTheme.scaffoldBackgroundColor
             : AppThemes.lightTheme.scaffoldBackgroundColor;
 
-        final textColor = isDarkMode
-            ? AppThemes.darkTheme.textTheme.bodyLarge!.color
-            : AppThemes.lightTheme.textTheme.bodyLarge!.color;
-
         return RefreshIndicator(
           key: keyRefresh,
           onRefresh: () {
@@ -46,7 +42,7 @@ class HomeView extends StatelessWidget {
                     Text(
                       'Best Seller',
                       style: TextStyle(
-                        color: textColor,
+                        color: Theme.of(context).textTheme.bodyLarge!.color,
                         fontWeight: FontWeight.bold,
                         fontSize: 20.sp,
                       ),

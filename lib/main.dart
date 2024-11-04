@@ -10,8 +10,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   setupGetIt();
   await SharedPrefHelper.init();
+
   runApp(const MyApp());
 }
 
@@ -29,11 +31,12 @@ class MyApp extends StatelessWidget {
           create: (context) => ThemeDataCubit(),
           child: BlocBuilder<ThemeDataCubit, ThemeDataState>(
             builder: (context, state) {
-              final isDarkMode = state is ThemeDataDark;
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
-                theme: isDarkMode ? AppThemes.lightTheme : AppThemes.darkTheme,
+                theme: state is ThemeDataDark
+                    ? AppThemes.lightTheme
+                    : AppThemes.darkTheme,
                 initialRoute: Routes.homeScreen,
                 onGenerateRoute: AppRouting().generateRoute,
               );
