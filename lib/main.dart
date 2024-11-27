@@ -13,7 +13,6 @@ void main() async {
 
   setupGetIt();
   await SharedPrefHelper.init();
-
   runApp(const MyApp());
 }
 

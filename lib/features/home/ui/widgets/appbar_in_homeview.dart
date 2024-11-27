@@ -11,14 +11,14 @@ class AppBarInHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.watch<ThemeDataCubit>().state is ThemeDataDark;
-    final iconColor = Theme.of(context).textTheme.bodyLarge?.color;
+    final iconColor = Theme.of(context).iconTheme.color ?? Colors.black;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           'Bookly',
-          style: Styles.booklystyle(color: iconColor ?? Colors.black),
+          style: Styles.booklystyle(color: iconColor),
         ),
         Row(
           children: [
@@ -26,18 +26,19 @@ class AppBarInHomeView extends StatelessWidget {
               icon: Icon(Icons.dark_mode, color: iconColor),
               tooltip: 'Toggle Theme',
               onPressed: () {
-                final newTheme = isDarkMode ? ThemeStates.light : ThemeStates.dark;
+                  final newTheme = isDarkMode ? ThemeStates.light : ThemeStates.dark;
                 context.read<ThemeDataCubit>().toggleTheme(newTheme);
-              },
+              }, 
             ),
             IconButton(
               icon: Icon(Icons.search, color: iconColor),
-              tooltip: 'Cart',
+              tooltip: 'Search',
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) =>  CartPage()),
                 );
               },
+             
             ),
           ],
         ),

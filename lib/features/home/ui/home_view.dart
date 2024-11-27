@@ -1,4 +1,3 @@
-import 'package:booklyapp/core/themes/app_themes.dart';
 import 'package:booklyapp/features/home/logic/cubit/home_repo_cubit.dart';
 import 'package:booklyapp/features/home/logic/cubit/theme_data_cubit.dart';
 import 'package:booklyapp/features/home/ui/widgets/appbar_in_homeview.dart';
@@ -9,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeView extends StatelessWidget {
-   HomeView({super.key});
+  HomeView({super.key});
 
   final keyRefresh = GlobalKey<RefreshIndicatorState>();
 
@@ -17,38 +16,39 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeDataCubit, ThemeDataState>(
       builder: (context, state) {
-        final isDarkMode = state is ThemeDataDark;
-        final backgroundColor = isDarkMode
-            ? AppThemes.darkTheme.scaffoldBackgroundColor
-            : AppThemes.lightTheme.scaffoldBackgroundColor;
-
         return RefreshIndicator(
           key: keyRefresh,
-          onRefresh: () {
-            return context.read<HomeRepoCubit>().fetchDataBooks();
+          onRefresh: () async {
+            try {
+              await context.read<HomeRepoCubit>().fetchDataBooks();
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Failed to refresh data')),
+              );
+            }
           },
           child: Scaffold(
-            backgroundColor: backgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: SafeArea(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppBarInHomeView(),
+                    const AppBarInHomeView(),
                     SizedBox(height: 20.h),
-                     ImagesTitlesInToppage(),
+                    const ImagesTitlesInToppage(),
                     SizedBox(height: 35.h),
                     Text(
                       'Best Seller',
                       style: TextStyle(
-                        color: Theme.of(context).textTheme.bodyLarge!.color,
+                        color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 20.sp,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    ListviewBooks(isDarkMode: isDarkMode),
+                    SizedBox(height: 10.h),
+                    const ListviewBooks(),
                   ],
                 ),
               ),
