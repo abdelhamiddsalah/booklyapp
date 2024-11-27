@@ -19,7 +19,7 @@ class AppRouting {
           builder: (_) => BlocProvider(
             create: (context) =>
                 HomeRepoCubit(getIt<HomeRepo>())..fetchDataBooks(),
-            child: HomeView(),
+            child: const HomeView(),
           ),
         );
       case Routes.detailsScreen:

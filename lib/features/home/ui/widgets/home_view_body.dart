@@ -1,5 +1,4 @@
 import 'package:booklyapp/features/home/logic/cubit/home_repo_cubit.dart';
-import 'package:booklyapp/features/home/logic/cubit/theme_data_cubit.dart';
 import 'package:booklyapp/features/home/ui/widgets/appbar_in_homeview.dart';
 import 'package:booklyapp/features/home/ui/widgets/images_titles_in_topPage.dart';
 import 'package:booklyapp/features/home/ui/widgets/listview_books.dart';
@@ -12,8 +11,6 @@ class HomeViewBody extends StatelessWidget {
 final keyRefresh = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
-     return BlocBuilder<ThemeDataCubit, ThemeDataState>(
-      builder: (context, state) {
         return RefreshIndicator(
           key: keyRefresh,
           onRefresh: () async {
@@ -53,7 +50,5 @@ final keyRefresh = GlobalKey<RefreshIndicatorState>();
             ),
           ),
         );
-      },
-    );
   }
 }

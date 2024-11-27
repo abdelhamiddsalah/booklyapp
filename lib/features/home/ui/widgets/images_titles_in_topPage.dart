@@ -1,5 +1,5 @@
 import 'package:booklyapp/features/home/logic/cubit/home_repo_cubit.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:booklyapp/features/home/ui/widgets/image_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,26 +15,17 @@ class ImagesTitlesInToppage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (state is HomeRepoSuccess) {
+          final books = state.data.items ?? [];
           return SizedBox(
             height: 210.h,
             child: ListView.builder(
-              itemCount: state.data.items?.length ?? 0,
+              itemCount: books.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                final imageUrl = state.data.items![index].volumeInfo?.imageLinks?.thumbnail;
+                final imageUrl = books[index].volumeInfo?.imageLinks?.thumbnail;
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: AspectRatio(
-                      aspectRatio: 2.6 / 3.7,
-                      child: FancyShimmerImage(
-                        imageUrl: imageUrl ?? '',
-                        boxFit: BoxFit.fill, // ضبط صورة الوعاء
-                        errorWidget:const Icon(Icons.error), // عرض أيقونة خطأ إذا فشلت الصورة في التحميل
-                      ),
-                    ),
-                  ),
+                  child: ImageCard(imageUrl: imageUrl),
                 );
               },
             ),
@@ -43,7 +34,7 @@ class ImagesTitlesInToppage extends StatelessWidget {
         if (state is HomeRepoFailure) {
           return Center(child: Text('Error: ${state.errorHandler.error}'));
         }
-        return const Center(child: Text('No Data Available')); // حالة افتراضية
+        return const Center(child: Text('No Data Available'));
       },
     );
   }

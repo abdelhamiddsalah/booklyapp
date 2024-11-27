@@ -14,14 +14,14 @@ class ItemOfBooks extends StatelessWidget {
   // Adding books as an argument
  final booksmodel books;
   const ItemOfBooks({
-    Key? key,
+    super.key,
     required this.title,
     required this.author,
     required this.thumbnailUrl,
     required this.id,
     required this.index,
     required this.books, required this.desc, // Initialize books
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +67,9 @@ class ItemOfBooks extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-              SizedBox(height: 5,),
+              const SizedBox(height: 5,),
               Text(desc,maxLines: 2,style: TextStyle(color: textColor,fontSize: 14),),
-              SizedBox(height: 6,),
+              const SizedBox(height: 6,),
               Text(
                 author,
                 style: TextStyle(color: textColor, fontSize: 14,fontWeight: FontWeight.bold),
@@ -84,7 +84,7 @@ class ItemOfBooks extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(Icons.star, color: Colors.yellow),
-                      SizedBox(width: 5,),
+                      const SizedBox(width: 5,),
                       Text('34', style: TextStyle(color: textColor)),
                     ],
                   ),
