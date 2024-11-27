@@ -10,9 +10,9 @@ class ItemOfBooks extends StatelessWidget {
   final String thumbnailUrl;
   final String desc;
   final int index;
-  final String id; // ID of the book
-  // Adding books as an argument
- final booksmodel books;
+  final String id;
+  final booksmodel bookModel; // Updated variable name to bookModel
+
   const ItemOfBooks({
     super.key,
     required this.title,
@@ -20,12 +20,14 @@ class ItemOfBooks extends StatelessWidget {
     required this.thumbnailUrl,
     required this.id,
     required this.index,
-    required this.books, required this.desc, // Initialize books
+    required this.bookModel, // Updated variable name to bookModel
+    required this.desc,
   });
 
   @override
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
+
     return Row(
       children: [
         SizedBox(
@@ -33,13 +35,13 @@ class ItemOfBooks extends StatelessWidget {
           height: 140,
           child: InkWell(
             onTap: () {
-              // Pass `id`, `index`, and `books` to the details view
+              // Navigate to details screen and pass data
               context.pushNamed(
                 Routes.detailsScreen,
                 arguments: {
                   'id': id,
                   'index': index,
-                  'books': books, // Pass the actual booksmodel instance
+                  'bookModel': bookModel, // Passing bookModel instance
                 },
               );
             },
@@ -67,31 +69,40 @@ class ItemOfBooks extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-              const SizedBox(height: 5,),
-              Text(desc,maxLines: 2,style: TextStyle(color: textColor,fontSize: 14),),
-              const SizedBox(height: 6,),
+              const SizedBox(height: 5),
+              Text(
+                desc,
+                maxLines: 2,
+                style: TextStyle(color: textColor, fontSize: 14),
+              ),
+              const SizedBox(height: 6),
               Text(
                 author,
-                style: TextStyle(color: textColor, fontSize: 14,fontWeight: FontWeight.bold),
+                style: TextStyle(color: textColor, fontSize: 14, fontWeight: FontWeight.bold),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-              Row(
-                
-                children: [
-                  Text('12.2', style: TextStyle(color: textColor)),
-                  const SizedBox(width: 5),
-                  Row(
-                    children: [
-                      const Icon(Icons.star, color: Colors.yellow),
-                      const SizedBox(width: 5,),
-                      Text('34', style: TextStyle(color: textColor)),
-                    ],
-                  ),
-                ],
-              ),
+              const SizedBox(height: 6),
+              _buildBookRating(textColor),
             ],
           ),
+        ),
+      ],
+    );
+  }
+
+  /// Widget for displaying the rating information (star and review count)
+  Widget _buildBookRating(Color? textColor) {
+    return Row(
+      children: [
+        Text('12.2', style: TextStyle(color: textColor)),
+        const SizedBox(width: 5),
+        Row(
+          children: [
+            const Icon(Icons.star, color: Colors.yellow),
+            const SizedBox(width: 5),
+            Text('34', style: TextStyle(color: textColor)),
+          ],
         ),
       ],
     );

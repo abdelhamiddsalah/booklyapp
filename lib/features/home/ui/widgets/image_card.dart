@@ -21,7 +21,6 @@ class ImageCard extends StatelessWidget {
     );
   }
 }
-
 class ImageCardHelpers {
   /// Validate the image URL, return a placeholder if the URL is null or empty.
   static String validateImageUrl(String? url) {

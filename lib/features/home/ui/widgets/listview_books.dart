@@ -33,7 +33,7 @@ class ListviewBooks extends StatelessWidget {
                     desc: description,
                     id: book.id ?? '',
                     index: index,
-                    books: booksmodel(),
+                    bookModel: booksmodel(),
                   ),
                 );
               },
