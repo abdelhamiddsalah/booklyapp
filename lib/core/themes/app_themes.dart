@@ -5,14 +5,14 @@ class AppThemes {
   static final ThemeData lightTheme = ThemeData(
     primaryColor: Colorss.mainColor,
     scaffoldBackgroundColor: Colors.white,
-    iconTheme: IconThemeData(color: Colorss.mainColor),
+    iconTheme: const IconThemeData(color: Colorss.mainColor),
     textTheme: const TextTheme(
       bodyLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.black),
       headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colorss.mainColor),
+        backgroundColor: WidgetStateProperty.all(Colorss.mainColor),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -20,7 +20,7 @@ class AppThemes {
       fillColor: Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: Colors.grey),
+        borderSide: const BorderSide(color: Colors.grey),
       ),
     ),
    
@@ -36,7 +36,7 @@ class AppThemes {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.white),
+        backgroundColor: WidgetStateProperty.all(Colors.white),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
