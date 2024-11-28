@@ -1,7 +1,5 @@
 import 'package:booklyapp/core/routing/routes.dart';
-import 'package:booklyapp/features/cart/logic/cubit/cart_cubit.dart';
 import 'package:booklyapp/features/details/ui/details_view.dart';
-import 'package:booklyapp/features/home/data/models/books_model.dart';
 import 'package:booklyapp/features/home/data/repos/home_repo.dart';
 import 'package:booklyapp/features/home/logic/cubit/home_repo_cubit.dart';
 import 'package:booklyapp/features/home/ui/home_view.dart';
@@ -10,59 +8,67 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class AppRouting {
-  final GetIt getIt = GetIt.instance;
+  final GetIt _getIt = GetIt.instance;
 
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.homeScreen:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) =>
-                HomeRepoCubit(getIt<HomeRepo>())..fetchDataBooks(),
-            child: const HomeView(),
-          ),
-        );
+        return _buildHomeRoute();
+
       case Routes.detailsScreen:
-        // Ensure `settings.arguments` is a Map and contains required keys
-        if (settings.arguments is Map<String, dynamic>) {
-          final args = settings.arguments as Map<String, dynamic>;
-          final id = args['id'] as String;
-          final index = args['index'] as int;
-          final books = args['books'] as booksmodel;
-          return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (context) =>
-                      HomeRepoCubit(getIt<HomeRepo>())..fetchDataBooks(),
-                ),
-                BlocProvider(
-                  create: (context) => CartCubit(),
-                ),
-              ],
-              child: DetailsView(
-                id: id,
-                index: index,
-                books: books,
-              ),
-            ),
-          );
-        }
-        // Fallback for missing or incorrect arguments
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            appBar: AppBar(title: const Text("Invalid arguments")),
-            body:
-                const Center(child: Text("Invalid arguments passed to route")),
-          ),
-        );
+        return _buildDetailsRoute(settings);
+
       default:
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            appBar: AppBar(title: const Text("Page not found")),
-            body: const Center(child: Text("404 - Page not found")),
-          ),
-        );
+        return _buildNotFoundRoute();
     }
+  }
+
+  /// إنشاء الروت الخاص بـ HomeView
+  MaterialPageRoute _buildHomeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => BlocProvider(
+        create: (_) => HomeRepoCubit(_getIt<HomeRepo>())..fetchDataBooks(),
+        child: const HomeView(),
+      ),
+    );
+  }
+
+  /// إنشاء الروت الخاص بـ DetailsView
+  MaterialPageRoute _buildDetailsRoute(RouteSettings settings) {
+    final arguments = settings.arguments as Map<String, dynamic>?;
+    if (arguments != null && arguments.containsKey('id')) {
+      final id = arguments['id'] as String;
+      return MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (context) => HomeRepoCubit(_getIt<HomeRepo>())..fetchDataBooks(),
+          child: DetailsView(id: id),
+        ),
+      );
+    }
+    return _buildInvalidArgumentsRoute();
+  }
+
+  /// صفحة لعرض خطأ عند تمرير Arguments غير صالحة
+  MaterialPageRoute _buildInvalidArgumentsRoute() {
+    return MaterialPageRoute(
+      builder: (_) => Scaffold(
+        appBar: AppBar(title: const Text("Invalid Arguments")),
+        body: const Center(
+          child: Text("Invalid arguments passed to route"),
+        ),
+      ),
+    );
+  }
+
+  /// صفحة الخطأ الافتراضية عند عدم العثور على الروت
+  MaterialPageRoute _buildNotFoundRoute() {
+    return MaterialPageRoute(
+      builder: (_) => Scaffold(
+        appBar: AppBar(title: const Text("Page Not Found")),
+        body: const Center(
+          child: Text("404 - Page not found"),
+        ),
+      ),
+    );
   }
 }

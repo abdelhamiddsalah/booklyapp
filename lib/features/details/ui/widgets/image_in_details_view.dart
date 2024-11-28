@@ -3,6 +3,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// ignore: camel_case_types
 class image_in_details_view extends StatelessWidget {
   const image_in_details_view({
     super.key,
@@ -10,7 +11,6 @@ class image_in_details_view extends StatelessWidget {
   });
 
   final Items book;
-
   @override
   Widget build(BuildContext context) {
     return ClipRRect(

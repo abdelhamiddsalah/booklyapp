@@ -40,8 +40,6 @@ class ItemOfBooks extends StatelessWidget {
                 Routes.detailsScreen,
                 arguments: {
                   'id': id,
-                  'index': index,
-                  'bookModel': bookModel, // Passing bookModel instance
                 },
               );
             },
@@ -65,7 +63,10 @@ class ItemOfBooks extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(color: textColor, fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: textColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
@@ -78,7 +79,10 @@ class ItemOfBooks extends StatelessWidget {
               const SizedBox(height: 6),
               Text(
                 author,
-                style: TextStyle(color: textColor, fontSize: 14, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: textColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),

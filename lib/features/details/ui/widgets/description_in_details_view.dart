@@ -2,6 +2,7 @@ import 'package:booklyapp/core/themes/styles.dart';
 import 'package:booklyapp/features/home/data/models/books_model.dart';
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class description_in_details_view extends StatelessWidget {
   const description_in_details_view({
     super.key,
