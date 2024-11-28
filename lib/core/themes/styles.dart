@@ -14,7 +14,7 @@ class Styles {
     return TextStyle(
       color: Theme.of(context).textTheme.bodyLarge!.color,
       fontWeight: FontWeight.bold,
-      fontSize: 23.sp, // Using ScreenUtil here for consistency
+      fontSize: 18.sp, // Using ScreenUtil here for consistency
     );
   }
 
@@ -22,7 +22,7 @@ class Styles {
     return TextStyle(
       color: Theme.of(context).textTheme.bodyLarge!.color,
       fontWeight: FontWeight.bold,
-      fontSize: 16,
+      fontSize: 16.sp,
     );
   }
 

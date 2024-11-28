@@ -23,7 +23,6 @@ class DetailsViewBody extends StatelessWidget {
           final book = state.data.items?.firstWhere(
             (book) => book.id == id,
           );
-
           if (book == null) {
             return Scaffold(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
