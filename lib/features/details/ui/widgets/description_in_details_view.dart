@@ -21,6 +21,7 @@ class description_in_details_view extends StatelessWidget {
         ),
       const  SizedBox(height: 20),
         Text(
+          maxLines: 2,
           book.volumeInfo!.description ?? 'No Description Available',
           style: Styles.descriptionIndetails(context: context),
         ),

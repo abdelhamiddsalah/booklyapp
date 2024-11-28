@@ -21,7 +21,7 @@ class Styles {
   static TextStyle descriptionIndetailsTitle({required BuildContext context}) {
     return TextStyle(
       color: Theme.of(context).textTheme.bodyLarge!.color,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.bold,
       fontSize: 16,
     );
   }
@@ -30,7 +30,16 @@ class Styles {
     return TextStyle(
       color: Theme.of(context).textTheme.bodyLarge!.color,
       fontWeight: FontWeight.w400,
-      fontSize: 17,
+      fontSize: 12.sp,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  static TextStyle priceStyle({required BuildContext context}) {
+    return const TextStyle(
+      color: Colors.orange,
+      fontWeight: FontWeight.w600,
+      fontSize: 17
     );
   }
 }

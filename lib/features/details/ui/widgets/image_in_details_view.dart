@@ -17,8 +17,8 @@ class image_in_details_view extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       child: FancyShimmerImage(
         imageUrl: book.volumeInfo!.imageLinks?.thumbnail ?? '',
-        width: 140.w,
-        height: 240.h,
+        width: 100.w,
+        height: 200.h,
         errorWidget:const Icon(Icons.error), // في حالة وجود خطأ في تحميل الصورة
       ),
     );
