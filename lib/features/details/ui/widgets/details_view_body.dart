@@ -19,15 +19,12 @@ class DetailsViewBody extends StatelessWidget {
     return BlocBuilder<HomeRepoCubit, HomeRepoState>(
       builder: (context, state) {
         if (state is HomeRepoSuccess) {
-          // البحث عن الكتاب باستخدام id
           final book = state.data.items?.firstWhere(
             (book) => book.id == id,
           );
+
           if (book == null) {
-            return Scaffold(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              body: const Center(child: Text("Book not found")),
-            );
+            return _buildErrorState(context, "Book not found");
           }
 
           return Scaffold(
@@ -37,30 +34,27 @@ class DetailsViewBody extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                 child: SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const AppbarInDetails(),
-                      const SizedBox(height: 15),
+                      AppbarInDetails(item: book),
+                      SizedBox(height: 15.h),
                       image_in_details_view(book: book),
-                      const SizedBox(height: 30),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          book.volumeInfo?.title ?? 'No Title',
-                          textAlign: TextAlign.start,
-                          style: Styles.titleInDetails(context: context),
-                        ),
+                      SizedBox(height: 30.h),
+                      Text(
+                        book.volumeInfo?.title ?? 'No Title',
+                        style: Styles.titleInDetails(context: context),
                       ),
-                      const SizedBox(height: 20),
-                                            RowPrice(book: book),
-                     const SizedBox(height: 20,),
+                      SizedBox(height: 20.h),
+                      RowPrice(book: book),
+                      SizedBox(height: 20.h),
                       description_in_details_view(book: book),
-                      const SizedBox(height: 20,),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Top Popular :',style: Styles.descriptionIndetailsTitle(context: context),)),
-                       const SizedBox(height: 20,),
-                     const ImagesTitlesInToppage()
-
+                      SizedBox(height: 20.h),
+                      Text(
+                        'Top Popular:',
+                        style: Styles.descriptionIndetailsTitle(context: context),
+                      ),
+                      SizedBox(height: 20.h),
+                      const ImagesTitlesInToppage(),
                     ],
                   ),
                 ),
@@ -68,18 +62,27 @@ class DetailsViewBody extends StatelessWidget {
             ),
           );
         } else if (state is HomeRepoFailure) {
-          return Scaffold(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            body: const Center(child: Text("Failed to load data")),
-          );
+          return _buildErrorState(context, "Failed to load data");
         }
 
-        // عرض مؤشر تحميل أثناء جلب البيانات
-        return Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          body: const Center(child: CircularProgressIndicator()),
-        );
+        return _buildLoadingState(context);
       },
+    );
+  }
+
+  Widget _buildErrorState(BuildContext context, String message) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: Center(
+        child: Text(message, style: Theme.of(context).textTheme.bodyLarge),
+      ),
+    );
+  }
+
+  Widget _buildLoadingState(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: const Center(child: CircularProgressIndicator()),
     );
   }
 }
