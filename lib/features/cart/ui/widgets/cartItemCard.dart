@@ -1,14 +1,17 @@
-import 'package:booklyapp/features/home/data/models/books_model.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
+import 'package:booklyapp/features/home/data/models/books_model.dart';
 
 class CartItemCard extends StatelessWidget {
-  final booksmodel book;
+  final Items item;
   final int index;
-  const CartItemCard({super.key, required this.book, required this.index});
+
+  const CartItemCard({super.key, required this.item, required this.index});
 
   @override
   Widget build(BuildContext context) {
-    final title = book.items?[index].volumeInfo?.title ?? 'No Title';
+    final title = item.volumeInfo?.title ?? 'No Title';
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
