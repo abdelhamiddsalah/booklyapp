@@ -21,8 +21,7 @@ class AppBarActions extends StatelessWidget {
           },
         ),
         IconButton(
-          icon: Icon(Icons.shopping_bag_outlined, color: iconColor),
-          tooltip: 'Search',
+          icon: Icon(Icons.shopping_cart, color: iconColor),
           onPressed: () {
             AppBarHelpers.navigateToCart(context);
           },

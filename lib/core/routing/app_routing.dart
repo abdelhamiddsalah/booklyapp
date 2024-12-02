@@ -1,4 +1,6 @@
 import 'package:booklyapp/core/routing/routes.dart';
+import 'package:booklyapp/features/cart/logic/cubit/cart_cubit_cubit.dart';
+import 'package:booklyapp/features/cart/ui/cart_view.dart';
 import 'package:booklyapp/features/details/ui/details_view.dart';
 import 'package:booklyapp/features/home/data/repos/home_repo.dart';
 import 'package:booklyapp/features/home/logic/cubit/home_repo_cubit.dart';
@@ -33,14 +35,32 @@ class AppRouting {
     );
   }
 
+  // ignore: unused_element
+  MaterialPageRoute _buildCartRoute() {
+    return MaterialPageRoute(
+      builder: (_) => BlocProvider(
+        create: (context) => CartCubitCubit(),
+        child: const CartView(),
+      ),
+    );
+  }
+
   /// إنشاء الروت الخاص بـ DetailsView
   MaterialPageRoute _buildDetailsRoute(RouteSettings settings) {
     final arguments = settings.arguments as Map<String, dynamic>?;
     if (arguments != null && arguments.containsKey('id')) {
       final id = arguments['id'] as String;
       return MaterialPageRoute(
-        builder: (_) => BlocProvider(
-          create: (context) => HomeRepoCubit(_getIt<HomeRepo>())..fetchDataBooks(),
+        builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  HomeRepoCubit(_getIt<HomeRepo>())..fetchDataBooks(),
+            ),
+            BlocProvider(
+              create: (context) => CartCubitCubit(),
+            ),
+          ],
           child: DetailsView(id: id),
         ),
       );

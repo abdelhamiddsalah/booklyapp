@@ -1,29 +1,38 @@
-import 'package:booklyapp/features/home/data/models/books_model.dart';
+import 'package:booklyapp/features/cart/logic/cubit/cart_cubit_cubit.dart';
+import 'package:booklyapp/features/cart/ui/widgets/cartItemCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:booklyapp/features/cart/logic/cubit/cart_cubit.dart';
-import 'package:booklyapp/features/cart/ui/widgets/cartItemCard.dart';
-
 class CartViewBody extends StatelessWidget {
   const CartViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Cart')),
-      body: BlocBuilder<CartCubit, List<Items>>(
-        builder: (context, cartItems) {
-          if (cartItems.isEmpty) {
-            return const Center(child: Text('Your cart is empty.'));
-          }
-          return ListView.builder(
-            itemCount: cartItems.length,
-            itemBuilder: (context, index) {
-              final item = cartItems[index];
-              return CartItemCard(item: item, index: index);
-            },
-          );
-        },
+      body: BlocProvider(
+        create: (context) => CartCubitCubit(),
+        child: BlocBuilder<CartCubitCubit, CartCubitState>(
+          builder: (context, state) {
+            if (state is CartCubitInitial) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is CartCubitLoaded) {
+              if (state.cartItems.isEmpty) {
+                return const Center(child: Text('Your cart is empty.'));
+              }
+              return ListView.builder(
+                itemCount: state.cartItems.length,
+                itemBuilder: (context, index) {
+                  final cartItem = state.cartItems[index];
+                  return CartItemCard(
+                    item: cartItem.item,
+                    index: index,
+                  );
+                },
+              );
+            } else {
+              return const Center(child: Text('An error occurred.'));
+            }
+          },
+        ),
       ),
     );
   }

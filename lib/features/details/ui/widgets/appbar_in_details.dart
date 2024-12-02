@@ -1,16 +1,17 @@
 import 'package:booklyapp/core/helper/contexts.dart';
-import 'package:booklyapp/features/cart/logic/cubit/cart_cubit.dart';
+import 'package:booklyapp/features/cart/logic/cubit/cart_cubit_cubit.dart';
 import 'package:booklyapp/features/details/ui/widgets/webview_details.dart';
+import 'package:booklyapp/features/home/data/models/books_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppbarInDetails extends StatelessWidget {
-  final dynamic item; // Ensure the type matches your model, e.g., `final Items? item;`
+  final Items item;
   final int? index;
 
   const AppbarInDetails({
     super.key,
-    required this.item, // Mark as required since it's critical for adding to cart
+    required this.item, 
     this.index,
   });
 
@@ -24,7 +25,7 @@ class AppbarInDetails extends StatelessWidget {
         _buildIconButton(
           icon: Icons.close,
           onPressed: () {
-            context.pop(); // Safely pop the navigation stack
+            context.pop(); 
           },
           iconColor: iconColor,
         ),
@@ -33,16 +34,10 @@ class AppbarInDetails extends StatelessWidget {
             _buildIconButton(
               icon: Icons.shopping_cart,
               onPressed: () {
-                if (item != null) {
-                  context.read<CartCubit>().addToCart(item);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Item added to cart')),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Unable to add item to cart')),
-                  );
-                }
+                context.read<CartCubitCubit>().addToCart(item);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Item added to cart')),
+                );
               },
               iconColor: iconColor,
             ),
