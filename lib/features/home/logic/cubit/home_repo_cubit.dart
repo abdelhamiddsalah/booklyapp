@@ -3,6 +3,7 @@ import 'package:booklyapp/core/networking/api_errors.dart';
 import 'package:booklyapp/core/networking/api_result.dart';
 import 'package:booklyapp/features/home/data/models/books_model.dart';
 import 'package:booklyapp/features/home/data/repos/home_repo.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 
 part 'home_repo_state.dart';

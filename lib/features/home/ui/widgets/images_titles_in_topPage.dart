@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:booklyapp/features/home/logic/cubit/home_repo_cubit.dart';
 import 'package:booklyapp/features/home/ui/widgets/image_card.dart';
 import 'package:flutter/material.dart';

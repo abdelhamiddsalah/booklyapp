@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:booklyapp/core/helper/enums.dart';
 import 'package:booklyapp/core/helper/sharedPrefernces_helper.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 
 part 'theme_data_state.dart';

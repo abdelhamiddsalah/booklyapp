@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:booklyapp/features/cart/logic/cubit/cart_cubit_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:booklyapp/features/home/data/models/books_model.dart';
