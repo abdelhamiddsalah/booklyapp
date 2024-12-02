@@ -11,7 +11,7 @@ class AppbarInDetails extends StatelessWidget {
 
   const AppbarInDetails({
     super.key,
-    required this.item, 
+    required this.item,
     this.index,
   });
 
@@ -25,35 +25,39 @@ class AppbarInDetails extends StatelessWidget {
         _buildIconButton(
           icon: Icons.close,
           onPressed: () {
-            context.pop(); 
+            context.pop();
           },
           iconColor: iconColor,
         ),
-        Row(
-          children: [
-            _buildIconButton(
-              icon: Icons.shopping_cart,
-              onPressed: () {
-                context.read<CartCubitCubit>().addToCart(item);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Item added to cart')),
-                );
-              },
-              iconColor: iconColor,
-            ),
-            _buildIconButton(
-              icon: Icons.share_outlined,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WebviewDetails(index: index),
-                  ),
-                );
-              },
-              iconColor: iconColor,
-            ),
-          ],
+        BlocBuilder<CartCubitCubit, CartCubitState>(
+          builder: (context, state) {
+            return Row(
+              children: [
+                _buildIconButton(
+                  icon: Icons.shopping_cart,
+                  onPressed: () {
+                    context.read<CartCubitCubit>().addToCart(item);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Item added to cart')),
+                    );
+                  },
+                  iconColor: iconColor,
+                ),
+                _buildIconButton(
+                  icon: Icons.share_outlined,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WebviewDetails(index: index),
+                      ),
+                    );
+                  },
+                  iconColor: iconColor,
+                ),
+              ],
+            );
+          },
         ),
       ],
     );

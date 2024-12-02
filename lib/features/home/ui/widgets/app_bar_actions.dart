@@ -1,3 +1,4 @@
+import 'package:booklyapp/features/cart/logic/cubit/cart_cubit_cubit.dart';
 import 'package:booklyapp/features/home/ui/widgets/app_bar_helpers.dart';
 import 'package:booklyapp/features/home/logic/cubit/theme_data_cubit.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +21,18 @@ class AppBarActions extends StatelessWidget {
             AppBarHelpers.toggleTheme(context, isDarkMode);
           },
         ),
-        IconButton(
-          icon: Icon(Icons.shopping_cart, color: iconColor),
-          onPressed: () {
-            AppBarHelpers.navigateToCart(context);
-          },
+        BlocProvider(
+          create: (context) => CartCubitCubit(),
+          child: BlocBuilder<CartCubitCubit, CartCubitState>(
+            builder: (context, state) {
+              return IconButton(
+                icon: Icon(Icons.shopping_cart, color: iconColor),
+                onPressed: () {
+                  AppBarHelpers.navigateToCart(context);
+                },
+              );
+            },
+          ),
         ),
       ],
     );

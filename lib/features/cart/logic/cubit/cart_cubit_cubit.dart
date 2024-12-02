@@ -1,44 +1,38 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:booklyapp/features/home/data/models/books_model.dart';
-// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 
 part 'cart_cubit_state.dart';
 
-class CartItem {
-  final Items item;
+class CartCubitCubit extends Cubit<CartCubitState> {
+  CartCubitCubit() : super(CartCubitInitial());
 
-  CartItem({required this.item});
+  final List<Items> _cartItems = [];
+
+  // To load cart items
+  void loadCart() {
+    if (isClosed) return; // Prevent emitting state if cubit is closed
+    emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems)));
+  }
+
+  // To add an item to the cart
+ void addToCart(Items item) {
+  print('Before adding item: $_cartItems');
+  if (isClosed) return; // Prevent emitting state if cubit is closed
+  if (_cartItems.contains(item)) return; // Prevent duplicates
+  _cartItems.add(item); // Add the item
+  print('After adding item: $_cartItems');
+  emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems))); // Emit the new state
 }
 
-class CartCubitCubit extends Cubit<CartCubitState> {
-  CartCubitCubit() : super(CartCubitInitial()){
-    _loadCart();
-  }
 
-  final List<CartItem> _cartItems = [];
-
-  // تحميل العناصر من الذاكرة
-  void _loadCart() {
+  // To remove an item from the cart
+  void removeFromCart(cartItem) {
+    if (isClosed) return; // Prevent emitting state if cubit is closed
+    _cartItems.remove(cartItem.item);
     emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems)));
   }
 
-  // إضافة عنصر إلى السلة
-  void addToCart(Items item) {
-    CartItem newItem = CartItem(item: item);
-    _cartItems.add(newItem);
-    emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems)));
-  }
-
-  // إزالة عنصر من السلة
-  void removeFromCart(CartItem item) {
-    final index = _cartItems.indexOf(item);
-    if (index != -1) {
-      _cartItems.removeAt(index);
-      emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems)));
-    }
-  }
-
-  // إرجاع العناصر الحالية
-  List<CartItem> get cartItems => List.unmodifiable(_cartItems);
+  // To get the current cart items
+  List<Items> get cartItems => List.unmodifiable(_cartItems);
 }

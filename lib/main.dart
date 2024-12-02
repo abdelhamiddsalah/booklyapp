@@ -34,10 +34,10 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: state is ThemeDataDark
-                    ? AppThemes.lightTheme
-                    : AppThemes.darkTheme,
+                    ? AppThemes.darkTheme
+                    : AppThemes.lightTheme,
                 initialRoute: Routes.homeScreen,
-                onGenerateRoute: AppRouting().generateRoute,
+                onGenerateRoute: (settings) => AppRouting().onGenerateRoute(settings),
               );
             },
           ),
