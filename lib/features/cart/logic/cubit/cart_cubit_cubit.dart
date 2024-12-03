@@ -9,30 +9,31 @@ class CartCubitCubit extends Cubit<CartCubitState> {
 
   final List<Items> _cartItems = [];
 
-  // To load cart items
+  // لتحميل العناصر في السلة
   void loadCart() {
-    if (isClosed) return; // Prevent emitting state if cubit is closed
     emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems)));
   }
 
-  // To add an item to the cart
- void addToCart(Items item) {
-  print('Before adding item: $_cartItems');
-  if (isClosed) return; // Prevent emitting state if cubit is closed
-  if (_cartItems.contains(item)) return; // Prevent duplicates
-  _cartItems.add(item); // Add the item
-  print('After adding item: $_cartItems');
-  emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems))); // Emit the new state
+  // لإضافة عنصر إلى السلة
+  // تأكد من أن دالة إضافة العناصر إلى السلة تعمل كما هو متوقع.
+void addToCart(Items item) {
+  if (!_cartItems.contains(item)) {
+    _cartItems.add(item);
+    emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems)));
+  }
 }
 
 
-  // To remove an item from the cart
-  void removeFromCart(cartItem) {
-    if (isClosed) return; // Prevent emitting state if cubit is closed
-    _cartItems.remove(cartItem.item);
-    emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems)));
+  // لحذف عنصر من السلة
+  void removeFromCart(Items item) {
+    try {
+      _cartItems.remove(item);
+      emit(CartCubitLoaded(cartItems: List.unmodifiable(_cartItems)));
+    } catch (e) {
+      emit(CartCubitError(message: "Failed to remove item from cart"));
+    }
   }
 
-  // To get the current cart items
+  // للحصول على العناصر الحالية في السلة
   List<Items> get cartItems => List.unmodifiable(_cartItems);
 }

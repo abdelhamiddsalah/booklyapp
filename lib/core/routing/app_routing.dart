@@ -11,7 +11,6 @@ import 'package:get_it/get_it.dart';
 class AppRouting {
   final GetIt _getIt = GetIt.instance;
 
-  // بدلاً من generateRoute، يمكن أن تُدير التنقل مباشرة باستخدام Navigator
   void navigateToHome(BuildContext context) {
     Navigator.pushNamed(context, Routes.homeScreen);
   }
@@ -28,7 +27,6 @@ class AppRouting {
     Navigator.pushNamed(context, Routes.cartScreen);
   }
 
-  // في التوجيه العادي، لا تحتاج إلى _generateRoute أو MaterialPageRoute
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.homeScreen:
@@ -41,13 +39,12 @@ class AppRouting {
       case Routes.detailsScreen:
         final arguments = settings.arguments as Map<String, dynamic>?;
         final id = arguments?['id'] as String?;
-
         if (id != null) {
           return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
               providers: [
                 BlocProvider(create: (_) => _getIt<HomeRepoCubit>()..fetchDataBooks()),
-                BlocProvider(create: (_) => _getIt<CartCubitCubit>()),
+                BlocProvider(create: (_) => CartCubitCubit()),
               ],
               child: DetailsView(id: id),
             ),
@@ -57,7 +54,7 @@ class AppRouting {
       case Routes.cartScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider<CartCubitCubit>(
-            create: (_) => _getIt<CartCubitCubit>()..loadCart(),
+            create: (_) => CartCubitCubit()..loadCart(),
             child: const CartView(),
           ),
         );

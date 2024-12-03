@@ -7,6 +7,7 @@ class CartViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // context.read<CartCubitCubit>().loadCart();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
@@ -14,13 +15,22 @@ class CartViewBody extends StatelessWidget {
       body: BlocBuilder<CartCubitCubit, CartCubitState>(
         builder: (context, state) {
           if (state is CartCubitLoaded) {
+            final c=state.cartItems;
+            if (state.cartItems.isEmpty) {
+              return const Center(child: Text('Your cart is empty.'));
+            }
             return ListView.builder(
-              itemCount: state.cartItems.length,
+              itemCount: c.length,
               itemBuilder: (context, index) {
-                final item = state.cartItems[index];
+                final item = c[index];
                 return ListTile(
-                  title: Text(item.volumeInfo!.title.toString()), // افترض أن "name" هو اسم المنتج
-                  subtitle: Text(item.volumeInfo!.language.toString()), // افترض أن "price" هو السعر
+                  title: Text(
+                    item.volumeInfo?.title ?? 'No Title',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    'Language: ${item.volumeInfo?.language ?? 'Unknown'}',
+                  ),
                   trailing: IconButton(
                     icon: const Icon(Icons.remove),
                     onPressed: () {
@@ -31,7 +41,7 @@ class CartViewBody extends StatelessWidget {
               },
             );
           } else if (state is CartCubitInitial) {
-            return const Center(child: Text('No items in the cart'));
+            return const Center(child: Text('Loading cart items...'));
           } else {
             return const Center(child: CircularProgressIndicator());
           }

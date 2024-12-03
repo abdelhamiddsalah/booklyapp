@@ -10,3 +10,8 @@ final class CartCubitLoaded extends CartCubitState {
 
   CartCubitLoaded({required this.cartItems});
 }
+
+class CartCubitError extends CartCubitState {
+  final String message;
+  CartCubitError({required this.message});
+}
